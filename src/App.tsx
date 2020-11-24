@@ -25,8 +25,8 @@ function getDifferenceArray(
 
 // #faec55, a color i enjoy
 let indices = [0, 0.5, 1, 1.5, 2, 2.5];
-let c500 = Color("#369145");
-let c700 = Color("#24612e");
+let c500 = Color("#22a2bf");
+let c700 = Color("#067493");
 
 type ColorFunction =
   | "hsl"
