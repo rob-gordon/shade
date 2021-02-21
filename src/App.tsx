@@ -24,9 +24,17 @@ function getDifferenceArray(
 }
 
 // #faec55, a color i enjoy
-let indices = [0, 0.5, 1, 1.5, 2, 2.5];
-let c500 = Color("#369145");
-let c700 = Color("#24612e");
+let numSwatches = 5;
+let distanceBetweenGivenColors = 1;
+let mainColorIndex = 2; // max numSwatches - 1
+let indices = Array(
+  Math.max(mainColorIndex + 1, numSwatches - (mainColorIndex + 1))
+)
+  .fill(0)
+  .map((_, i) => i / distanceBetweenGivenColors);
+let c500 = Color("#4f5fff");
+let c700 = Color("#1f42dd");
+console.log({ indices });
 
 type ColorFunction =
   | "hsl"
@@ -111,13 +119,13 @@ function Shade({
   }, [setBend]);
   const multipliers = useMemo(() => {
     let list = indices.map((i) => fn(i));
-
-    return list
+    let negativeList = list
       .slice(1)
       .reverse()
       .map((n) => -n)
-      .concat(list)
-      .slice(0, -1);
+      .slice(-mainColorIndex);
+
+    return negativeList.concat(list).slice(0, numSwatches); //
   }, [fn]);
   return (
     <div>
@@ -225,9 +233,6 @@ function Aside() {
       <h2>Mix</h2>
       <div className="color-list">
         {allColors.map((shades, index) => {
-          if (shades.length > 9) {
-            console.log(shades);
-          }
           return (
             <div key={`color-${index}`} className="color-list-br">
               {shades.map((c, i) => (
